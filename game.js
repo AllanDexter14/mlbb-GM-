@@ -34,10 +34,14 @@ const hk=()=>G.yr+' S'+(G.sp+1);
 const ent=(p,t)=>p.h[hk()]??={t,rs:S0(),po:S0(),in:S0(),earn:0};
 const pay=(t,a)=>{if(t==G.me)G.cash+=a;G.T[t].p.forEach(p=>{const v=a*.2/5;p.earn+=v;ent(p,t).earn+=v})};
 const ach=(t,x)=>G.T[t].p.forEach(p=>p.ach.push(hk()+' · '+x));
-const BMAX=5;
+const BMAX=5; // Maximum substitutes per team. Change this to allow more.
 const all=k=>[...G.T[k].p,...G.T[k].b];
-function mkBench(reg,i){const base=80-i*1.6+OFF[reg];return ROLES.map(r=>mk(ign(reg),r,Math.round(base+rnd(-4,3))))}
 
+function mkBench(reg,i){
+  const base=80-i*1.6+OFF[reg];
+  const role=ROLES[rnd(0,ROLES.length-1)];
+  return [mk(ign(reg),role,Math.round(base+rnd(-4,3)))];
+}
 function mkTeam(n,reg,i){const base=88-i*1.6+OFF[reg];
   return ROLES.map(r=>{const f=(REAL[n]||[]).find(x=>x[1]==r);return f?mk(...f):mk(ign(reg),r,Math.round(base+rnd(-3,3)))})}
 function newGame(me){
@@ -207,7 +211,22 @@ function step(){
   const c=G.cur;c.n++;
   const label=`${G.yr} Split ${G.sp+1} · ${ST[G.sp][G.st][0]} · Day ${c.n}`;
   const res=c.nx.value.map(m=>bo(...m));
-  res.forEach(m=>{const r=RG.find(x=>m.tag.startsWith('MPL '+x+' '));if(r)(G.po[r]??=[]).push({tag:m.tag,w:m.w,l:m.l,sw:m.sw,sl:m.sl})});
+  res.forEach(m=>{
+  const r=RG.find(x=>m.tag.startsWith('MPL '+x+' '));
+  if(r){
+    (G.po[r]??=[]).push({
+      a:m.a,
+      b:m.b,
+      tag:m.tag,
+      w:m.w,
+      l:m.l,
+      sw:m.sw,
+      sl:m.sl,
+      gs:m.gs,
+      n:m.n
+    });
+  }
+});
   const mm=res.find(m=>m.a==G.me||m.b==G.me);if(mm)G.last=mm;
   G.day={label,res:res.slice().sort((x,y)=>((y.a==G.me||y.b==G.me)?1:0)-((x.a==G.me||x.b==G.me)?1:0))};
   c.hist.push(res.map(m=>({a:m.a,b:m.b,w:m.w,l:m.l,sw:m.sw,sl:m.sl,tag:m.tag,n:m.n})));
@@ -225,19 +244,41 @@ function sim(mode){
 function sign(i){
   const f=G.fa[i],c=cost(f),t=G.T[G.me];
   if(G.cash<c)return;
-  if(t.b.length>=BMAX){G.msg='Your bench is full (5). Release someone first.';render();return}
+  if(t.b.length>=BMAX){
+  G.msg=`Your bench is full (${BMAX}). Release someone first.`;
+  render();
+  return;
+}
   G.cash-=c;t.b.push(f);G.fa.splice(i,1);G.fa.push(mk(ign(G.reg),f.r,rnd(66,80)));
   G.msg=`Signed ${f.n} to your bench.`;render();
 }
-function buyout(tn,i,b){
-  const T=G.T[tn],me=G.T[G.me],A=b?T.b:T.p,p=A[i],c=bcost(p);
+function buyout(tn,i,b=false){
+  const T=G.T[tn],me=G.T[G.me];
+  const A=b?T.b:T.p;
+  const p=A[i];
+  if(!p)return;
+
+  const c=bcost(p);
+
   if(G.cash<c||tn==G.me)return;
-  if(me.b.length>=BMAX){G.msg='Your bench is full (5). Release someone first.';render();return}
-  G.cash-=c;me.b.push(p);
-  const k=b?-1:T.b.findIndex(x=>x.r==p.r);
-  if(k>=0){A[i]=T.b[k];T.b[k]=mk(ign(T.reg),p.r,ov(p)-12+rnd(-2,2))}
-  else A[i]=mk(ign(T.reg),p.r,ov(p)-8+rnd(-2,2));
-  G.msg=`Bought ${p.n} from ${tn} for $${c}k. He's on your bench, press Start to play him.`;render();
+
+  if(me.b.length>=BMAX){
+    G.msg=`Your bench is full (${BMAX}). Release someone first.`;
+    render();
+    return;
+  }
+
+  G.cash-=c;
+  me.b.push(p);
+
+  A[i]=mk(
+    ign(T.reg),
+    p.r,
+    ov(p)-8+rnd(-2,2)
+  );
+
+  G.msg=`Bought ${p.n} from ${tn} for $${c}k. Added to your bench.`;
+  render();
 }
 function startP(i){
   const t=G.T[G.me],j=t.p.findIndex(x=>x.r==t.b[i].r);
@@ -249,13 +290,7 @@ function relP(i){
 
 const bcost=p=>Math.max(40,(ov(p)-55)*8);
 const tcost=(a,b)=>Math.max(0,ov(b)-ov(a))*10;
-function buyout(tn,i){
-  const T=G.T[tn],p=T.p[i],c=bcost(p);if(G.cash<c||tn==G.me)return;
-  const m=G.T[G.me].p,j=m.findIndex(x=>x.r==p.r);
-  G.cash-=c;G.fa.push(m[j]);G.fa=G.fa.slice(-12);m[j]=p;
-  T.p[i]=mk(ign(T.reg),p.r,ov(p)-8+rnd(-2,2));
-  G.msg=`Bought ${p.n} from ${tn} for $${c}k. Your old ${p.r} went to free agency.`;render();
-}
+
 function trade(tn,i){
   const T=G.T[tn],p=T.p[i],m=G.T[G.me].p,j=m.findIndex(x=>x.r==p.r),c=tcost(m[j],p);
   if(G.cash<c||tn==G.me)return;
@@ -301,7 +336,79 @@ const row=(p,s)=>`<tr><td>${p.r}</td><td class="hi">${pl(p)}</td><td>${p.mec}</t
 const hd=s=>`<tr><th>Role</th><th>Player</th><th>MEC</th><th>MAC</th><th>TF</th><th>CON</th><th>OVR</th>${s?'<th>GP</th><th>K/D/A</th><th>KDA</th><th>MVP</th>':''}`;
 const box=(t,S)=>`<table><tr><th>${t}</th><th>K</th><th>D</th><th>A</th><th>Gold</th></tr>${S.map(x=>`<tr><td>${x.p.r} ${x.p.n}</td><td>${x.k}</td><td>${x.d}</td><td>${x.a}</td><td>${x.gold}</td></tr>`).join('')}</table>`;
 const gameHtml=(m,g,i,o)=>`<details ${o?'open':''}><summary>Game ${i+1}: ${[m.a,m.b][g.w]} won (${g.min}:00, kills ${g.ks[0]}-${g.ks[1]}, MVP ${g.mvp})</summary>${box(m.a,g.S[0])}${box(m.b,g.S[1])}<div class="mu">${g.lg.join('<br>')}</div></details>`;
-const matchHtml=(m,o)=>`<details ${o?'open':''}><summary class="${m.a==G.me||m.b==G.me?'me':''}">${m.tag}: ${m.w} def. ${m.l} ${m.sw}-${m.sl}</summary>${m.gs.map((g,i)=>gameHtml(m,g,i,o)).join('')}</details>`;
+const matchHtml=(m,o)=>{
+  const games=Array.isArray(m.gs)
+    ? m.gs.map((g,i)=>gameHtml(m,g,i,o)).join('')
+    : '<p class="mu">Individual game details unavailable in this older save.</p>';
+
+  return `<details ${o?'open':''}>
+    <summary class="${m.a==G.me||m.b==G.me?'me':''}">
+      ${m.tag}: ${m.w} def. ${m.l} ${m.sw}-${m.sl}
+    </summary>
+    ${games}
+  </details>`;
+};
+
+function playoffCard(m){
+  const a=m.a||m.w,b=m.b||m.l;
+  const old=!m.a||!m.b;
+  const score=(team)=>old?'—':team===m.w?m.sw:m.sl;
+
+  return `<div class="box" style="min-width:220px;margin:8px 0;border:1px solid var(--line)">
+    <div class="mu">${m.tag.replace('MPL '+(LR||G.reg)+' ','')}</div>
+    <div style="display:flex;justify-content:space-between;padding:7px 0">
+      <b class="${m.w===a?'hi':''}">${a}</b>
+      <b>${score(a)}</b>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line)">
+      <b class="${m.w===b?'hi':''}">${b}</b>
+      <b>${score(b)}</b>
+    </div>
+    <details>
+      <summary>Series details · BO${m.n||'?'}</summary>
+      ${Array.isArray(m.gs)?m.gs.map((g,i)=>gameHtml(m,g,i,0)).join(''):'<p class="mu">Individual game details unavailable.</p>'}
+    </details>
+  </div>`;
+}
+
+function playoffColumn(r,stage){
+  const matches=(G.po[r]||[]).filter(m=>m.tag==='MPL '+r+' '+stage);
+
+  return `<div style="min-width:250px;max-width:270px;flex:0 0 250px">
+    <b>${stage}</b>
+    ${matches.length
+      ? matches.map(playoffCard).join('')
+      : '<div class="box mu">Awaiting matches</div>'}
+  </div>`;
+}
+
+function playoffHtml(r){
+  return `<div class="box">
+    <b>MPL ${r} Playoff Bracket</b>
+    <p class="mu">Double-elimination bracket · Select a series to inspect its games and statistics.</p>
+  </div>
+
+  <div class="box">
+    <b>UPPER BRACKET</b>
+    <div style="display:flex;gap:18px;overflow-x:auto;padding:12px 0;align-items:flex-start">
+      ${['Opening','Upper','Upper Final'].map(s=>playoffColumn(r,s)).join('<div style="font-size:24px;padding-top:80px">→</div>')}
+    </div>
+  </div>
+
+  <div class="box">
+    <b>LOWER BRACKET</b>
+    <div style="display:flex;gap:18px;overflow-x:auto;padding:12px 0;align-items:flex-start">
+      ${['Lower','Lower Final'].map(s=>playoffColumn(r,s)).join('<div style="font-size:24px;padding-top:80px">→</div>')}
+    </div>
+  </div>
+
+  <div class="box">
+    <b>CHAMPIONSHIP</b>
+    <div style="display:flex;gap:18px;overflow-x:auto;padding:12px 0;align-items:flex-start">
+      ${playoffColumn(r,'Grand Final')}
+    </div>
+  </div>`;
+}
 const dayHtml=()=>!G.day?'':`<div class="box"><b>${G.day.label}</b>${G.day.res.map(m=>matchHtml(m,0)).join('')}</div>`;
 const lead=(f,min)=>Object.keys(G.T).flatMap(t=>G.T[t].p.map(p=>({p,t}))).filter(x=>x.p.s.g>=min).sort((a,b)=>f(b.p.s)-f(a.p.s)).slice(0,10)
   .map(x=>`<tr><td>${x.p.r}</td><td class="hi">${pl(x.p)}</td><td>${x.t}</td><td>${x.p.s.g}</td><td>${kda(x.p.s)}</td><td>${x.p.s.m}</td></tr>`).join('');
@@ -333,7 +440,7 @@ function render(){
   <span class="mu">Next: ${nm} · Day ${G.cur?G.cur.n+1:1}${mine?` · Your match: ${mine[0]} vs ${mine[1]} (BO${mine[2]})`:''}</span><br>
   <button onclick="sim('day')">Sim day ▶</button><button onclick="sim('me')">Sim to my next match ⏭</button><button onclick="sim('stage')">Sim stage ⏩</button>
   <button class="t" onclick="menu()">Menu</button><button class="t ${G.god?'on':''}" onclick="G.god=!G.god;render()">God mode</button></div>`;
-  out+=['roster','stats','market','league','match','history'].map(x=>`<button class="t ${TAB==x?'on':''}" onclick="TAB='${x}';render()">${x[0].toUpperCase()+x.slice(1)}</button>`).join('');
+  out+=['roster','stats','market','league','playoffs','match','history'].map(x=>`<button class="t ${TAB==x?'on':''}" onclick="TAB='${x}';render()">${x[0].toUpperCase()+x.slice(1)}</button>`).join('');
   if(G.msg)out+=`<div class="box">${G.msg}</div>`;
   if(TAB=='player')out+=profile();
   if(TAB=='match')out+=(G.last?`<div class="box"><b>Your latest match</b>${matchHtml(G.last,1)}</div>`:'<div class="box mu">Play a match to see the play-by-play.</div>')+dayHtml();
@@ -341,11 +448,37 @@ function render(){
   if(TAB=='stats')out+=`<div class="box"><b>Top KDA (min 6 games)</b><table><tr><th>Role</th><th>Player</th><th>Team</th><th>GP</th><th>KDA</th><th>MVP</th></tr>${lead(s=>(s.k+s.a)/Math.max(1,s.d),6)}</table></div><div class="box"><b>MVP leaders</b><table><tr><th>Role</th><th>Player</th><th>Team</th><th>GP</th><th>KDA</th><th>MVP</th></tr>${lead(s=>s.m,1)}</table></div>`;
   if(TAB=='market')out+=`<div class="box"><table>${hd(0)}<th>Cost</th><th></th></tr>${G.fa.map((p,i)=>row(p,0)+`<td>$${cost(p)}k</td><td><button onclick="sign(${i})" ${G.cash<cost(p)?'disabled':''}>Sign</button></td></tr>`).join('')}</table></div>`;
   if(TAB=='league'){
-    const r=LR||G.reg,tb=G.tb[r],ts=tb?Object.keys(tb).sort((a,b)=>tb[b].w-tb[a].w):R[r];
-    out+=`<div class="box">`+RG.map(x=>`<button class="t ${r==x?'on':''}" onclick="LR='${x}';LT=null;render()">MPL ${x}</button>`).join('')+
-      `<table><tr><th>Team</th><th>OVR</th>${tb?'<th>W</th><th>L</th>':''}</tr>${ts.map(k=>`<tr class="${k==G.me?'me':''}"><td><a href="#" onclick="LT='${k}';render();return false">${k}</a></td><td>${rt(k).toFixed(1)}</td>${tb?`<td>${tb[k].w}</td><td>${tb[k].l}</td>`:''}</tr>`).join('')}</table><p class="mu">Click a team to see its players.</p></div>`;
-    const po=G.po[r];
-    if(po&&po.length)out+=`<div class="box"><b>MPL ${r} playoffs</b>${po.map(m=>`<div>${m.tag.replace('MPL '+r+' ','')}: ${m.w} def. ${m.l} ${m.sw}-${m.sl}</div>`).join('')}</div>`;
+      const po=G.po[r];
+
+if(po&&po.length){
+  const stages=[...new Set(po.map(m=>m.tag))];
+
+  out+=`<div class="box">
+    <b>MPL ${r} Playoff Results</b>
+    <p class="mu">Select a series to view its individual games, player statistics, and MVP.</p>
+    ${stages.map(stage=>`
+      <div style="margin:12px 0">
+        <b>${stage.replace('MPL '+r+' ','')}</b>
+        ${po.filter(m=>m.tag===stage).map(m=>matchHtml(m,0)).join('')}
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+if(po&&po.length){
+  const stages=[...new Set(po.map(m=>m.tag))];
+
+  out+=`<div class="box">
+    <b>MPL ${r} Playoff Results</b>
+    <p class="mu">Select a series to view its individual games, player statistics, and MVP.</p>
+    ${stages.map(stage=>`
+      <div style="margin:12px 0">
+        <b>${stage.replace('MPL '+r+' ','')}</b>
+        ${po.filter(m=>m.tag===stage).map(m=>matchHtml(m,0)).join('')}
+      </div>
+    `).join('')}
+  </div>`;
+}
     if(LT){
       const T=G.T[LT],mn=LT==G.me;
       out+=`<div class="box"><b>${LT}</b> (${T.reg}) · rating ${rt(LT).toFixed(1)}<table>${hd(1)}${mn?'':'<th>Buyout</th><th>Trade</th>'}</tr>${ROLES.map(role=>{
@@ -355,6 +488,16 @@ function render(){
         return row(p,1)+`<td><button onclick="buyout('${LT}',${i})" ${G.cash<c?'disabled':''}>$${c}k</button></td><td><button onclick="trade('${LT}',${i})" ${G.cash<tc?'disabled':''}>${tc?'+$'+tc+'k':'Swap'}</button></td></tr>`;
       }).join('')}</table>${benchHtml(T,mn)}</div>`;
     }
+  }
+   if(TAB=='playoffs'){
+    const r=LR||G.reg;
+
+    out+=`<div class="box">
+      <b>Select a region</b><br>
+      ${RG.map(x=>`<button class="t ${r==x?'on':''}" onclick="LR='${x}';render()">MPL ${x}</button>`).join('')}
+    </div>`;
+
+    out+=playoffHtml(r);
   }
   if(TAB=='history')out+=`<div class="box">${G.hist.length?G.hist.map(x=>`<div>${x}</div>`).join(''):'<span class="mu">Nothing yet.</span>'}</div>`;
   $('#app').innerHTML=out;
