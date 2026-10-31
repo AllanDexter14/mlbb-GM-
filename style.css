@@ -16,6 +16,7 @@
   --gold: #e9b44c;
 
   --bd: #2c2f3b;
+    --line: #2c2f3b;
   --green: #48c78e;
 
   --radius: 12px;
@@ -300,6 +301,17 @@ input {
 input:focus {
   border-color: var(--ac);
   box-shadow: 0 0 0 2px rgba(230,57,70,.15);
+}
+
+select {
+  background: var(--panel2);
+  color: var(--fg);
+  border: 1px solid var(--bd);
+  border-radius: 7px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
 }
 
 /* FOOTER */
