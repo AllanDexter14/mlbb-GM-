@@ -1,4 +1,4 @@
-# 🎮 MLBB Esports Manager
+#  MLBB Esports Manager
 
 **Build your organization. Manage your roster. Conquer the MLBB esports scene.**
 
@@ -10,46 +10,46 @@ Your goal is simple: build a successful organization and establish your legacy i
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🏆 Esports Management
+###  Esports Management
 - Manage your own MLBB esports organization.
 - Compete against AI-controlled organizations.
 - Build and manage your professional roster.
 - Make organizational decisions that influence your team's future.
 
-### 👥 Player Management
+###  Player Management
 - Real-world MLBB teams and players.
 - Editable team and player databases.
 - Manage player contracts and salaries.
 - Make roster changes and build your ideal lineup.
 
-### 💰 Financial Management
+###  Financial Management
 - Realistic organizational finances.
 - Player salaries and contract expenses.
 - Manage your organization's financial resources.
 - Balance competitive ambitions with financial sustainability.
 
-### ⚔️ Match Simulation
+###  Match Simulation
 - Detailed text-based live match simulation.
 - Follow the progression of competitive matches.
 - Experience the highs and lows of professional MLBB competition.
 - Compete against AI-controlled teams.
 
-### 📅 Calendar-Based Progression
+###  Calendar-Based Progression
 - Progress through days, weeks, and months.
 - Manage your organization's activities over time.
 - Experience an evolving esports environment.
 - Keep track of your organization's competitive journey.
 
-### 🤖 AI Organizations
+###  AI Organizations
 - Every organization outside your control is managed by AI.
 - AI teams participate in the competitive ecosystem.
 - Enjoy a management experience against AI competition.
 
 ---
 
-## 🎯 Game Philosophy
+##  Game Philosophy
 
 MLBB Esports Manager aims to capture the experience of running a professional esports organization rather than simply playing individual matches.
 
@@ -64,7 +64,7 @@ The challenge is not just winning matches. It's building an organization that ca
 
 ---
 
-## 🛠️ Development
+##  Development
 
 **Project Status:** In Development
 
@@ -78,7 +78,7 @@ This project is being developed with a focus on:
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 - [ ] Core game architecture
 - [ ] MLBB team and player database
@@ -94,7 +94,7 @@ This project is being developed with a focus on:
 
 ---
 
-## 🎮 Scope
+##  Scope
 
 | Category | Specification |
 |---|---|
@@ -109,7 +109,7 @@ This project is being developed with a focus on:
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 Installation instructions and setup requirements will be added as development progresses.
 
@@ -121,7 +121,7 @@ Instructions for building and running the game will be provided once the develop
 
 ---
 
-## 📌 Disclaimer
+##  Disclaimer
 
 MLBB Esports Manager is an independent fan-made project and is not affiliated with, endorsed by, or sponsored by Moonton or Mobile Legends: Bang Bang.
 
@@ -129,7 +129,7 @@ All respective trademarks, team names, and player names belong to their respecti
 
 ---
 
-## ❤️ Acknowledgements
+##  Acknowledgements
 
 Developed independently by **AllanDexter14**.
 
