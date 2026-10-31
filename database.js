@@ -124,50 +124,59 @@ const PLAYER_FORM = {
   Yeyeniya:      { mec:76, mac:79, tf:80, con:77 },
 
 
-  // MPL ID - Season 18
-  "Nnael":         { mec: 96, mac: 93, tf: 92, con: 93 },
-  "Kevin":         { mec: 96, mac: 91, tf: 92, con: 91 },
-  "Kairi":         { mec: 97, mac: 96, tf: 95, con: 94 },
-  "Kelra":         { mec: 96, mac: 92, tf: 94, con: 93 },
-  "Kiboy":         { mec: 87, mac: 94, tf: 97, con: 92 },
-  "Dingarai":      { mec: 97, mac: 92, tf: 95, con: 94 },
-  "Dalvin":        { mec: 92, mac: 94, tf: 96, con: 93 },
-  "Alexander":     { mec: 85, mac: 93, tf: 97, con: 92 },
-  "Affan":         { mec: 95, mac: 91, tf: 94, con: 92 },
-  "Zeonn":         { mec: 95, mac: 96, tf: 96, con: 97 },
-  "Jiizee":        { mec: 94, mac: 95, tf: 97, con: 96 },
-  "Joshua":        { mec: 97, mac: 94, tf: 95, con: 96 },
-  "Drichel":       { mec: 88, mac: 94, tf: 96, con: 94 },
-  "Keven":         { mec: 94, mac: 92, tf: 94, con: 94 },
-  "Lyoni":         { mec: 83, mac: 94, tf: 98, con: 91 },
-  "SANZ":          { mec: 93, mac: 95, tf: 94, con: 94 },
-  "Nino":          { mec: 92, mac: 93, tf: 94, con: 91 },
-  "APHRO":         { mec: 84, mac: 92, tf: 96, con: 91 },
-    "A B O Y":       { mec: 90, mac: 92, tf: 93, con: 91 },
+ // =================================
+  // MPL ID - SEASON 18
+  // =================================
 
-  // MPL MY - Season 18
-  "Stormie":       { mec: 94, mac: 96, tf: 97, con: 96 },
-  "Innocent":      { mec: 96, mac: 92, tf: 94, con: 96 },
-  "Sekysss":       { mec: 95, mac: 92, tf: 94, con: 92 },
-  "Yums":          { mec: 82, mac: 95, tf: 98, con: 91 },
-  "Kramm":         { mec: 88, mac: 93, tf: 96, con: 92 },
-  "Claw Kun":      { mec: 84, mac: 94, tf: 97, con: 98 },
-  "Natco":         { mec: 94, mac: 91, tf: 93, con: 92 },
-  "Error 404":     { mec: 95, mac: 90, tf: 93, con: 91 },
-  "Sizkaa":        { mec: 87, mac: 90, tf: 93, con: 87 },
-  "Cliveee":       { mec: 94, mac: 93, tf: 96, con: 95 },
-  "Vanix":         { mec: 91, mac: 90, tf: 92, con: 89 },
+  Nnael:          { mec:88, mac:86, tf:87, con:86 },
+  Kevin:          { mec:86, mac:87, tf:88, con:86 },
+  Kairi:          { mec:94, mac:91, tf:92, con:91 },
+  Kelra:          { mec:91, mac:88, tf:90, con:89 },
+  Kiboy:          { mec:84, mac:89, tf:91, con:87 },
+  Dingarai:       { mec:86, mac:84, tf:85, con:84 },
+  Dalvin:         { mec:85, mac:86, tf:87, con:85 },
+  Alexander:      { mec:79, mac:85, tf:87, con:83 },
+  Affan:          { mec:87, mac:85, tf:86, con:85 },
+  Zeonn:          { mec:87, mac:88, tf:88, con:87 },
+  Jiizee:         { mec:85, mac:87, tf:88, con:86 },
+  Joshua:         { mec:89, mac:87, tf:88, con:88 },
+  Drichel:        { mec:82, mac:86, tf:87, con:85 },
+  Keven:          { mec:86, mac:84, tf:86, con:85 },
+  Lyoni:          { mec:78, mac:85, tf:88, con:83 },
+  "S A N Z":      { mec:87, mac:88, tf:87, con:87 },
+  Nino:           { mec:86, mac:87, tf:87, con:85 },
+  APHRO:          { mec:80, mac:85, tf:87, con:83 },
+  "A B O Y":      { mec:84, mac:85, tf:86, con:84 },
 
-  // MPL KH - Season 11
-  "Detective":     { mec: 94, mac: 93, tf: 94, con: 93 },
-  "Shadoww":       { mec: 91, mac: 92, tf: 93, con: 90 },
-  "Raa":           { mec: 92, mac: 94, tf: 93, con: 91 },
-  "Vincen":        { mec: 92, mac: 90, tf: 92, con: 90 },
-  "D7":            { mec: 85, mac: 92, tf: 95, con: 91 },
-  "Flick":         { mec: 95, mac: 91, tf: 93, con: 92 },
-  "Wickyyy":       { mec: 92, mac: 90, tf: 93, con: 90 },
-  "Aries":         { mec: 90, mac: 92, tf: 94, con: 91 },
-  "Oppi":          { mec: 91, mac: 93, tf: 94, con: 91 },
-  "Layy":          { mec: 93, mac: 89, tf: 91, con: 90 },
-  "Cypher":        { mec: 85, mac: 91, tf: 95, con: 90 }
+  // =================================
+  // MPL MY - SEASON 18
+  // =================================
+
+  Stormie:        { mec:90, mac:91, tf:92, con:90 },
+  Innocent:       { mec:89, mac:87, tf:89, con:89 },
+  Sekysss:        { mec:87, mac:85, tf:87, con:86 },
+  Yums:           { mec:82, mac:87, tf:89, con:85 },
+  Kramm:          { mec:83, mac:86, tf:88, con:85 },
+  "Claw Kun":     { mec:80, mac:85, tf:87, con:86 },
+  Natco:          { mec:85, mac:84, tf:86, con:84 },
+  "Error 404":    { mec:86, mac:82, tf:85, con:83 },
+  Sizkaa:         { mec:81, mac:83, tf:85, con:82 },
+  Cliveee:        { mec:87, mac:86, tf:88, con:87 },
+  Vanix:          { mec:84, mac:83, tf:85, con:82 },
+
+  // =================================
+  // MPL KH - SEASON 11
+  // =================================
+
+  Detective:      { mec:85, mac:84, tf:85, con:84 },
+  Shadoww:        { mec:82, mac:83, tf:84, con:81 },
+  Raa:            { mec:83, mac:85, tf:84, con:82 },
+  Vincen:         { mec:82, mac:81, tf:83, con:81 },
+  D7:             { mec:78, mac:84, tf:86, con:82 },
+  Flick:          { mec:85, mac:83, tf:84, con:83 },
+  Wickyyy:        { mec:83, mac:82, tf:84, con:81 },
+  Aries:          { mec:83, mac:84, tf:85, con:83 },
+  Oppi:           { mec:82, mac:84, tf:85, con:82 },
+  Layy:           { mec:84, mac:81, tf:83, con:82 },
+  Cypher:         { mec:79, mac:84, tf:87, con:83 }
 };
