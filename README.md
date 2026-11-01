@@ -64,35 +64,34 @@ The challenge is not just winning matches. It's building an organization that ca
 
 ---
 
-##  Development
-
-**Project Status:** In Development
-
-This project is being developed with a focus on:
-- Realistic esports management systems.
-- Player and organization databases.
-- Financial and contract management.
-- Detailed match simulations.
-- AI-driven competitive environments.
-- Long-term calendar-based progression.
-
----
-
 ##  Roadmap
 
-- [ ] Core game architecture
-- [ ] MLBB team and player database
-- [ ] Organization management system
-- [ ] Player contracts and salary system
-- [ ] Financial management
-- [ ] Match simulation engine
-- [ ] AI-controlled organizations
-- [ ] Calendar and progression system
-- [ ] League and tournament systems
-- [ ] User interface and game presentation
+- [x] Core game architecture
+- [x] MLBB team and player database
+- [x] Organization management system
+- [x] Player contracts and salary system
+- [x] Financial management
+- [x] Match simulation engine
+- [x] AI-controlled organizations
+- [x] Calendar and progression system
+- [x] League and tournament systems
+- [x] User interface and game presentation
 - [ ] Testing and balancing
 
----
+### Recent updates
+- [x] Fixed broken `game.js` script
+- [x] Player search
+- [x] Sell players
+- [x] Back button to main menu
+- [x] Role order: EXP, JG, MID, GOLD, ROAM
+- [x] Your team always on the left in matches
+- [x] Score spacing fix in match results
+
+### Up next
+- [ ] Player countries
+- [ ] Import limit (max 2 per team)
+- [ ] Free agent sort buttons
+- [ ] Org history: players and their matches
 
 ##  Scope
 
