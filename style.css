@@ -423,3 +423,10 @@ select {
 .mt-s{display:inline-flex;align-items:center;gap:10px}
 .mt-s i{font-style:normal;font-weight:800;padding:0 4px}
 .mt-s em{opacity:.6}
+
+.cb{overflow-x:auto;padding-bottom:6px}
+.cb-in{position:relative}
+.cb-in svg{position:absolute;left:0;top:0;pointer-events:none}
+.cb-n{position:absolute;display:flex;align-items:center}
+.cb-n>*{width:100%;box-sizing:border-box;margin:0}
+.cb-l{position:absolute;font-size:11px;letter-spacing:.05em;text-transform:uppercase;opacity:.6;white-space:nowrap}
