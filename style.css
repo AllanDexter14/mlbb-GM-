@@ -430,3 +430,34 @@ select {
 .cb-n{position:absolute;display:flex;align-items:center}
 .cb-n>*{width:100%;box-sizing:border-box;margin:0}
 .cb-l{position:absolute;font-size:11px;letter-spacing:.05em;text-transform:uppercase;opacity:.6;white-space:nowrap}
+
+
+
+/* ===== compact overrides (paste at the very bottom) ===== */
+body { padding: 0 20px; }
+.app-header { padding: 14px 0; }
+#app { margin: 16px auto 40px; }
+#app > .box:first-child { padding: 12px 14px; border-radius: 12px; }
+
+.box { padding: 11px 13px; margin: 8px 0; border-radius: 10px; }
+.box p { margin-top: 5px; margin-bottom: 5px; }
+
+button { padding: 4px 10px; margin: 2px; border-radius: 6px; }
+button.t { padding: 3px 9px; }
+
+input { padding: 4px 8px; border-radius: 6px; }
+input[type=checkbox], input[type=radio] { width: auto; padding: 0; margin: 0 4px; }
+input[type=range] { width: auto; padding: 0; }
+select { padding: 4px 6px; border-radius: 6px; }
+
+td, th { padding: 6px 9px; }
+
+details { padding: 7px 10px; margin: 6px 0; border-radius: 8px; }
+details[open] > summary { margin-bottom: 8px; }
+
+.br-t { padding: 5px 8px; font-size: 12px; }
+.br-m.pre{opacity:.8;cursor:default}
+
+.combo{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.combo-l{flex:2 1 560px;min-width:0}
+.combo-r{flex:1 1 300px;min-width:280px}
